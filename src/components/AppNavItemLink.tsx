@@ -1,7 +1,7 @@
-import React from "react";
+import { type ComponentProps } from "react";
 import { Nav } from "react-bootstrap";
 
-type Props = React.ComponentProps<typeof Nav.Link>;
+type Props = ComponentProps<typeof Nav.Link>;
 
 function AppNavItemLink(props: Props) {
   return (

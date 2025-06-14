@@ -11,7 +11,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@bootstrap": path.resolve(__dirname, "node_modules/bootstrap"),
+      "@": path.resolve(__dirname, "src"),
+      "@styles": path.resolve(__dirname, "src/styles"),
+      "@componentStyles": path.resolve(__dirname, "src/styles/components"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
   css: {

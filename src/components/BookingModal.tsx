@@ -1,6 +1,6 @@
 import { useMemo, type ComponentProps, type FormEventHandler } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-import { FloatingSelect, FloatingControl } from "./FloatingFields";
+import { FloatingSelect, FloatingControl } from "@components/FloatingFields";
 
 export type BookingFormTourSelectOption = {
   value: string;

@@ -1,5 +1,5 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import AppNavItemLink from "./AppNavItemLink";
+import AppNavItemLink from "@components/AppNavItemLink";
 import { useMemo } from "react";
 
 function AppNavbar() {

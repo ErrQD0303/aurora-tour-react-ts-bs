@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import HeroCarousel from "./HeroCarousel";
-import BookingModal from "./BookingModal";
-import PageOverview from "./PageOverview";
-import Packages from "./Packages";
-import FAQ from "./FAQ";
+import HeroCarousel from "@components/HeroCarousel";
+import BookingModal from "@components/BookingModal";
+import PageOverview from "@components/PageOverview";
+import Packages from "@components/Packages";
+import FAQ from "@components/FAQ";
 
 type AppMainProps = {
   showModal?: boolean | undefined;

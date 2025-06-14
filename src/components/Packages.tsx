@@ -1,8 +1,8 @@
 import { useMemo, type ComponentProps } from "react";
-import TourCardList from "./TourCardList";
-import tromsoNorwayJpg from "../assets/images/Tromso-Norway.jpg";
-import reykjavikIcelandJpg from "../assets/images/Reykjavik-Iceland.jpg";
-import yukonCanadaJpg from "../assets/images/Yukon-Canada.jpg";
+import TourCardList from "@components/TourCardList";
+import tromsoNorwayJpg from "@assets/images/Tromso-Norway.jpg";
+import reykjavikIcelandJpg from "@assets/images/Reykjavik-Iceland.jpg";
+import yukonCanadaJpg from "@assets/images/Yukon-Canada.jpg";
 
 type Props = ComponentProps<"section"> & {
   onBookingButtonClick?: () => void;

@@ -1,8 +1,8 @@
-import "./styles/App.scss";
+import "@styles/App.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AppFooter from "./components/AppFooter";
-import AppMain from "./components/AppMain";
-import AppNavbar from "./components/AppNavbar";
+import AppFooter from "@components/AppFooter";
+import AppMain from "@components/AppMain";
+import AppNavbar from "@components/AppNavbar";
 
 function App() {
   return (

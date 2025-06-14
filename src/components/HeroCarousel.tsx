@@ -1,8 +1,8 @@
 import { Carousel, Button } from "react-bootstrap";
-import carouselSlide1 from "../assets/images/carousel-1.jpg";
-import carouselSlide2 from "../assets/images/carousel-2.jpg";
-import carouselSlide3 from "../assets/images/carousel-3.jpg";
-import "../styles/components/HeroCarousel.scss";
+import carouselSlide1 from "@assets/images/carousel-1.jpg";
+import carouselSlide2 from "@assets/images/carousel-2.jpg";
+import carouselSlide3 from "@assets/images/carousel-3.jpg";
+import "@componentStyles/HeroCarousel.scss";
 import { useMemo, type ComponentProps } from "react";
 
 export type HeroCarouselItem = {

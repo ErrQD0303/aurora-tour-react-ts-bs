@@ -1,6 +1,6 @@
 import { type ComponentProps } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "../styles/components/PageOverview.scss";
+import "@componentStyles/PageOverview.scss";
 
 type Props = ComponentProps<"section"> & {};
 

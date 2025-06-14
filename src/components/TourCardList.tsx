@@ -1,6 +1,6 @@
 import { Col, Container, Row, type ContainerProps } from "react-bootstrap";
-import type { Tour } from "./Packages";
-import TourCard from "./TourCard";
+import type { Tour } from "@components/Packages";
+import TourCard from "@components/TourCard";
 
 type Props = ContainerProps & {
   onBookingButtonClick?: () => void;

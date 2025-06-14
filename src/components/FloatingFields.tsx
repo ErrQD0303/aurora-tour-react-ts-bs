@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef } from "react";
 import { Form } from "react-bootstrap";
-import type { BookingFormTourSelectOption } from "./BookingModal";
+import type { BookingFormTourSelectOption } from "@components/BookingModal";
 
 type FloatingInputProps = ComponentPropsWithoutRef<typeof Form.Control> & {};
 

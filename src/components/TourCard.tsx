@@ -1,5 +1,5 @@
 import { Card, type CardProps } from "react-bootstrap";
-import "../styles/components/TourCard.scss";
+import "@componentStyles/TourCard.scss";
 
 type Props = CardProps & {
   onBookingButtonClick?: () => void;
