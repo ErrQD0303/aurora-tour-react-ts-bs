@@ -20,11 +20,14 @@ function AppNavbar() {
         />
         <Navbar.Collapse id="navbarNav">
           <Nav as="ul" className="ms-auto">
-            <AppNavItemLink href="/#" active={activeLink === "#feature"}>
-              Feature
+            <AppNavItemLink
+              href="/#packages"
+              active={activeLink === "#packages"}
+            >
+              Packages
             </AppNavItemLink>
-            <AppNavItemLink href="/#" active={activeLink === "#pricing"}>
-              Pricing
+            <AppNavItemLink href="/#faq" active={activeLink === "#faq"}>
+              FAQ
             </AppNavItemLink>
           </Nav>
         </Navbar.Collapse>

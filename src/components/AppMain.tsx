@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import HeroCarousel from "./HeroCarousel";
 import BookingModal from "./BookingModal";
 import PageOverview from "./PageOverview";
+import Packages from "./Packages";
+import FAQ from "./FAQ";
 
 type AppMainProps = {
   showModal?: boolean | undefined;
@@ -26,6 +28,8 @@ const AppMainUI = (props: AppMainProps) => {
         onBookingButtonClick={handleShowBookingModal}
       />
       <PageOverview id="page-overview" className="overview" />
+      <Packages id="packages" onBookingButtonClick={handleShowBookingModal} />
+      <FAQ id="faq" />
     </main>
   );
 };
