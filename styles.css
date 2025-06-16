@@ -1,0 +1,1184 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* Shadow DOM reset */
+:host,
+:host *,
+:host *::before,
+:host *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --small-screen: 576px;
+  --medium-screen: 768px;
+  --large-screen: 992px;
+  --xlarge-screen: 1200px;
+  --xxlarge-screen: 1400px;
+
+  --border-radius: 0.8rem;
+  --border-width: 0.1rem;
+  --backdrop-zIndex: 998;
+  --modal-zIndex: 999;
+}
+
+body {
+  --body-bg-color: #fff;
+  --body-color: #212529;
+  --body-color-rgb: 33, 37, 41;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: var(--body-bg-color);
+  color: var(--body-color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+ul {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+ -----------------------------NAVIGATION BAR--------------------------------------
+ -------------------------------------------------------------------------- */
+
+.navbar {
+  --navbar-active-color: #000;
+  --navbar-hover-color: rgba(0, 0, 0, 0.8);
+  --navbar-disabled-color: rgba(0, 0, 0, 0.3);
+  --navbar-link-color: rgba(0, 0, 0, 0.6);
+  --navbar-brand-color: #000;
+  --navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+  --navbar-color: rgba(0, 0, 0, 0.55);
+  --navbar-toggler-icon-stroke: rgba(33, 37, 41, 0.75);
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.8rem 0;
+  color: var(--navbar-color);
+}
+
+.navbar.navbar-dark {
+  --navbar-color: rgb(255, 255, 255, 0.55);
+  --navbar-brand-color: rgb(255, 255, 255);
+  --navbar-link-color: rgb(255, 255, 255, 0.55s);
+  --navbar-hover-color: rgb(255, 255, 255);
+  --navbar-toggler-icon-stroke: rgb(255, 255, 255);
+  --navbar-active-color: #f00;
+  --navbar-disabled-color: #rgb(150, 150, 150);
+}
+
+.navbar.bg-dark {
+  --navbar-bg-dark-color: 33 37 41;
+  background-color: rgb(var(--navbar-bg-dark-color));
+}
+
+.navbar-light {
+  background-color: #f8f9fa;
+}
+
+.container {
+  --gutter-x: 2.4rem;
+  --guttery: 0;
+  width: 100%;
+  padding: 0 calc(var(--gutter-x) * 0.5);
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  line-height: 1.5;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  color: var(--navbar-brand-color);
+  text-transform: uppercase;
+}
+
+.navbar-toggler {
+  display: block;
+  background: none;
+  border: 0.08rem solid var(--navbar-toggler-icon-stroke);
+  border-radius: 0.6rem;
+  padding: 0.4rem 1.2rem;
+  cursor: pointer;
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  vertical-align: middle;
+  background-color: var(--navbar-toggler-icon-stroke);
+  mask: url("./images/menu-icon.svg") center / contain no-repeat;
+  -webkit-mask: url("./images/menu-icon.svg") center / contain no-repeat;
+}
+
+.collapse:not(.show) {
+  display: none;
+}
+
+.collapse {
+  display: block;
+  height: auto;
+}
+
+.collapsing {
+  overflow: hidden;
+  transition: height 0.35s ease;
+  display: block;
+}
+
+.disabled {
+  color: var(--navbar-disabled-color);
+  pointer-events: none;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.navbar-collapse {
+  flex-grow: 1;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.8rem 0;
+  color: var(--navbar-link-color);
+}
+
+.navbar .nav-link.active {
+  color: var(--navbar-active-color);
+}
+
+.nav-link:hover {
+  color: var(--navbar-hover-color);
+}
+
+/* --------------------------------------------------------------------------
+   ------------------------------CAROUSEL-----------------------------------
+   -------------------------------------------------------------------------- */
+.carousel {
+  position: relative;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-item {
+  height: 48rem;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0s, transform 1s ease-in-out;
+  transform: translateX(100%); /* Start off-screen to the right */
+  z-index: 0; /* Ensure it is below other items */
+}
+
+.carousel-item.active {
+  position: relative; /* Bring to the front */
+  opacity: 1;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out 1s !important;
+  transform: translateX(0); /* Move into view */
+  z-index: 1; /* Ensure it is above other items */
+}
+
+.carousel-item.carousel-item-show {
+  opacity: 1;
+}
+
+.carousel-item.carousel-item-next {
+  transform: translateX(100%); /* It will in the right if you click next */
+}
+
+.carousel-item.carousel-item-prev {
+  transform: translateX(-100%); /* It will in the left if you click previous */
+}
+
+.carousel-item.carousel-item-start {
+  transform: translateX(-100%);
+}
+
+.carousel-item.carousel-item-end {
+  transform: translateX(100%);
+}
+
+.carousel-item.carousel-item-center {
+  transform: translateX(0);
+}
+
+.carousel-item .carousel-item__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+#hero-carousel .carousel-item__image {
+  filter: brightness(0.6);
+}
+
+.visually-hidden {
+  /* Set the element visually to 1px^2 */
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important; /* Hide the element visually */
+  margin: -1px !important; /* Move the element out of visual content */
+  clip: rect(0, 0, 0, 0) !important; /* Clip the element */
+  white-space: nowrap !important; /* Prevent line breaks */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  border: 0;
+  padding: 0;
+  color: #fff;
+  opacity: 0.5;
+  z-index: 2;
+  transition: opacity 0.15s ease-in-out;
+  background-color: transparent;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 0.9;
+}
+
+.carousel-control-prev {
+  left: 0;
+}
+
+.carousel-control-next {
+  right: 0;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 3.2rem;
+  height: 3.2rem;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-position: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.carousel-control-prev-icon {
+  mask-image: url("./images/icons/previous-arrow.svg");
+}
+
+.carousel-control-next-icon {
+  mask-image: url("./images/icons/next-arrow.svg");
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0;
+  margin-right: 15%;
+  margin-left: 15%;
+  margin-bottom: 1.6rem;
+  z-index: 2;
+  background-color: transparent;
+}
+
+.carousel-indicators button {
+  box-sizing: content-box;
+  width: 3rem;
+  height: 0.3rem;
+  border: 0;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  padding: 0;
+  background-clip: padding-box; /* Ensures the background color is applied only to the padding and content area */
+  background-color: #fff;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: 0.6s opacity ease-in-out;
+}
+
+.carousel-indicators button.active {
+  opacity: 1;
+}
+
+.carousel-caption {
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  text-align: center;
+  margin-top: 2.4rem;
+  padding: 2rem 0;
+}
+
+#hero-carousel .carousel-caption .carousel-caption-text {
+  font-size: calc(2.08rem + 0.6vw);
+  margin-top: 4.8rem;
+  margin-bottom: 1.6rem;
+}
+
+#hero-carousel .carousel-caption .carousel-caption-header {
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: calc(2.6rem + 4.5vw);
+  text-transform: capitalize;
+  margin-bottom: 0.8rem;
+}
+
+.btn-primary {
+  --btn-primary-bg-color: #0d6efd;
+  --btn-primary-hover-bg-color: #0b5ed7;
+  --btn-primary-border-color: #0d6efd;
+  --btn-primary-hover-border-color: #0b5ed7;
+  display: block;
+  padding: 0.8rem 2.4rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #fff;
+  background-color: var(--btn-primary-bg-color);
+  border: none;
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+  margin: 0 auto;
+  border: 0.08rem solid var(--btn-primary-bg-color);
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover-bg-color);
+  border-color: var(--btn-primary-hover-border-color);
+}
+
+/* --------------------------------------------------------------------------
+   ------------------------------PAGE OVERVIEW-----------------------------------
+   -------------------------------------------------------------------------- */
+.overview {
+  height: 18rem;
+  background-color: #d3dae1;
+}
+
+#page-overview .container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#page-overview .container * {
+  font-size: calc(2.04rem + 0.3vw);
+  font-weight: 400;
+}
+
+.page-overview__content {
+  width: 100%;
+  display: grid;
+  font-size: inherit;
+  grid-template-columns: 1fr;
+}
+
+.page-overview__content__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-overview__content i {
+  flex: 0 0 auto;
+  margin-right: 0.8rem;
+}
+
+.page-overview__content span {
+  display: inline-block;
+}
+
+.icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  background-color: #000;
+}
+
+.plane-fill {
+  mask-image: url("./images/icons/plane-fill.svg");
+  -webkit-mask-image: url("./images/icons/plane-fill.svg");
+}
+
+.patch-check-fill {
+  mask-image: url("./images/icons/patch-check-fill.svg");
+  -webkit-mask-image: url("./images/icons/patch-check-fill.svg");
+}
+
+.wallet-fill {
+  mask-image: url("./images/icons/wallet-fill.svg");
+  -webkit-mask-image: url("./images/icons/wallet-fill.svg");
+}
+
+/* --------------------------------------------------------------------------
+ -----------------------------BOOKING MODAL--------------------------------------
+ -------------------------------------------------------------------------- */
+.modal {
+  --modal-zIndex: calc(var(--backdrop-zIndex) + 1);
+  --modal-width: 50rem;
+  --modal-bg-color: var(--body-bg-color);
+  --modal-color: var(--body-color);
+  --modal-margin: 0.8rem;
+  --modal-padding: 1.6rem;
+  --modal-border-width: var(--border-width);
+  --modal-border-radius: var(--border-radius);
+  --modal-border-color: rgba(0, 0, 0, 0.175);
+  --modal-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.075);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(
+    --modal-zIndex
+  ); /* Ensure the modal is above all other content */
+  overflow-x: auto;
+  overflow-y: hidden;
+  outline: 0;
+  display: none;
+  pointer-events: none; /* Prevents interaction with the modal backdrop */
+}
+
+.fade {
+  transition: opacity 0.15s linear;
+}
+
+.modal.fade .modal-dialog {
+  transform: translate(
+    0,
+    -5rem
+  ); /* Slightly move up, later after we add 'show' class we will reset the transform back to normal with transform(none) */
+  transition: transform 0.3s ease-out; /* Delay the display change until after the transition */
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: var(--modal-margin);
+  pointer-events: none; /* Prevents interaction with the modal backdrop */
+}
+
+.modal-dialog--centered {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 2 * var(--modal-margin)); /* Center vertically */
+}
+
+.modal.show .modal-dialog {
+  transform: none; /* Reset the transform when shown */
+}
+
+.modal-content {
+  background-color: var(--modal-bg-color);
+  color: var(--modal-color);
+  width: 100%;
+  position: relative; /* Position relative to allow absolute positioning of children */
+  display: flex;
+  flex-direction: column; /* Automatically align children vertically */
+  pointer-events: auto; /* Allow interaction with the modal content, enabling it, the parent disabled it. */
+  background-clip: padding-box; /* Ensures the background color is applied only to the padding and content area, in a scenario where border color is transparent */
+  border: var(--modal-border-width) solid var(--modal-border-color);
+  border-radius: var(--modal-border-radius);
+  outline: none; /* Prevent outline appearing on focus */
+}
+
+.modal-backdrop {
+  --backdrop-bg: #000;
+  --backdrop-opacity: 0.5;
+  position: fixed;
+  z-index: var(--backdrop-zIndex);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--backdrop-bg);
+}
+
+.modal-backdrop.fade {
+  opacity: 0; /* Prevent unexpected behaviour when user accidentally add the modal-backdrop to an element */
+}
+
+.modal-backdrop.show {
+  opacity: var(
+    --backdrop-opacity
+  ); /* Show the backdrop with the specified opacity */
+}
+
+.form-floating {
+  position: relative;
+}
+
+.form-floating > .form-control {
+  padding: 1.6rem 1.2rem;
+}
+
+.form-floating > .form-control::placeholder {
+  color: transparent; /* Hide the placeholder text */
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--body-color);
+  appearance: none; /* Remove default styling, indicating that you style the input appearance by yourself */
+  -webkit-appearance: none;
+  background-color: var(--body-bg-color);
+  background-clip: padding-box; /* Ensures the background color is applied only to the padding and content area */
+  border: var(--border-width) solid #dee2e6;
+  border-radius: var(--border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  color: var(--body-color);
+  background-color: var(--body-bg-color);
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown) {
+  padding-top: 2.6rem;
+  padding-bottom: 1rem;
+}
+.form-floating > .form-control,
+.form-floating > .form-select {
+  --form-border-width: var(--border-width);
+  height: calc(5.6rem + calc(var(--form-border-width) * 2));
+  min-height: calc(5.6rem + calc(var(--form-border-width) * 2));
+  line-height: 1.25;
+}
+
+label {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  max-width: 100%;
+  height: 100%;
+  padding: 1.6rem 1.2rem;
+  overflow: hidden;
+  color: rgba(var(--body-color-rgb), 0.65);
+  text-align: start;
+  text-overflow: ellipsis; /* Ensures the label text is truncated with an ellipsis if it overflows */
+  white-space: nowrap; /* Prevents the label text from wrapping to the next line */
+  pointer-events: none; /* Prevents the label from capturing pointer events */
+  transform-origin: 0 0; /* Ensures the label transforms from the top left corner */
+  border: var(--border-width) solid transparent; /* Prevent the flickering of label */
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-select:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  transform: scale(0.85) translateY(-0.8rem) translateX(0.24rem);
+}
+
+.form-floating > .form-select {
+  padding-top: 2.6rem;
+  padding-bottom: 1rem;
+  padding-left: 1.2rem;
+}
+
+.form-select {
+  --form-select-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  display: block;
+  width: 100%;
+  padding: 0.6rem 3.6rem 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--body-color);
+  appearance: none; /* Remove default styling, indicating that you style the input appearance by yourself */
+  -webkit-appearance: none;
+  background-color: var(--body-bg-color);
+  background-image: var(--form-select-bg-image);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.6rem 1.2rem;
+  border: var(--border-width) solid #dee2e6;
+  border-radius: var(--border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.modal-header {
+  --modal-header-padding: var(--modal-padding) var(--modal-padding);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: var(--modal-header-padding);
+  border-bottom: var(--modal-border-width) solid #dee2e6;
+  border-top-left-radius: calc(0.8rem - 1px);
+  border-top-right-radius: calc(0.8rem - 1px);
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: var(--modal-padding);
+}
+
+#booking-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+h5 {
+  font-size: 2rem;
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.btn-close {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
+  background-position: center;
+  background-size: 1.6rem auto;
+  background-repeat: no-repeat;
+  box-sizing: content-box;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0;
+  background-color: transparent;
+  padding: 0.8rem;
+  margin: -0.8rem -0.8rem -0.8rem auto;
+  border-radius: 0.6rem;
+  filter: none;
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  opacity: 0.75;
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-close:focus {
+  opacity: 1;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled) {
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end; /* Align buttons to the right */
+  padding: 1.2rem;
+  background-color: var(--body-bg-color);
+  color: var(--body-color);
+  border-top: 0.1rem solid #dee2e6;
+  border-bottom-right-radius: calc(0.8rem - 1px);
+  border-bottom-left-radius: calc(0.8rem - 1px);
+}
+
+.modal-footer > * {
+  margin: 0.8rem; /* Add space between buttons */
+}
+
+.btn-secondary {
+  --btn-secondary-bg-color: #6c757d;
+  --btn-secondary-hover-bg-color: #5c636a;
+  --btn-secondary-border-color: #6c757d;
+  --btn-secondary-hover-border-color: #565e64;
+  display: block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #fff;
+  background-color: var(--btn-secondary-bg-color);
+  border: none;
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+  margin: 0 auto;
+  border: 0.08rem solid var(--btn-secondary-bg-color);
+  text-align: center;
+  cursor: pointer;
+  appearance: button; /* Ensures the button has the correct appearance */
+  -webkit-appearance: button; /* Ensures the button has the correct appearance in WebKit browsers */
+}
+
+.modal-footer button {
+  margin: 0.4rem;
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-secondary-hover-bg-color);
+  border-color: var(--btn-secondary-hover-border-color);
+}
+
+/* --------------------------------------------------------------------------
+   ------------------------------PACKAGES-----------------------------------
+   -------------------------------------------------------------------------- */
+h2 {
+  font-size: calc(2.12rem + 0.9vw);
+}
+
+.packages__header,
+.faq__header {
+  text-align: center;
+  margin: 8rem 0;
+}
+
+.packages__card-list {
+  --card-list-gutter-x: 2.4rem;
+  --card-list-gutter-y: 4.8rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--card-list-gutter-y);
+  column-gap: var(--card-list-gutter-x);
+  flex: 1 1 auto;
+}
+
+.packages__card-list > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+.packages__card-list__item__card {
+  --card-bg-color: rgba(var(var(--body-color-rgb)), 0.03);
+  --card-height: ;
+  --card-border-width: var(--border-width);
+  --card-border-color: rgba(0, 0, 0, 0.175);
+  --card-border-radius: var(--border-radius);
+  --card-spacer-x: 1.6rem;
+  --card-spacer-y: 1.6rem;
+  --card-color: ;
+  --card-title-color: ; /* Set the color for the card title */
+  --card-title-spacer-y: 0.8rem;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--body-color);
+  height: var(--card-height);
+  background-color: var(--card-bg-color);
+  background-clip: border-box;
+  /* Make sure card size is not overflow if their content is too big for the card */
+  min-width: 0; /* Prevents flex items from overflowing their container */
+  word-wrap: break-word; /* Ensures long words break to fit within the card */
+
+  border: var(--card-border-width) solid var(--card-border-color);
+  border-radius: var(--card-border-radius);
+}
+
+.packages__card-list__item__card-img {
+  border-top-left-radius: var(--card-border-radius);
+  border-top-right-radius: var(--card-border-radius);
+
+  width: 100%;
+  height: 28.8rem;
+  object-fit: cover;
+  object-position: 0% 90%;
+}
+
+.packages__card-list__item__card-body {
+  flex: 1 1 auto;
+  padding: var(--card-spacer-y) var(--card-spacer-x);
+  color: var(--card-color);
+}
+
+h5 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit; /* Inherit color from parent */
+}
+
+.packages__card-list__item__card-title {
+  font-size: 2rem;
+  margin-bottom: var(--card-title-spacer-y);
+  color: var(--card-title-color);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.6rem;
+}
+
+.packages__card-list__item__card-text {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   ------------------------------FAQ-----------------------------------
+   -------------------------------------------------------------------------- */
+.faq {
+  margin: 4.8rem 0;
+}
+
+.accordion {
+  --accordion-border-radius: 0.6rem;
+  --accordion-color: var(--body-color);
+  --accordion-bg-color: var(--body-bg-color);
+  --accordion-border-width: var(--border-width);
+  --accordion-border-color: #dee2e6;
+  --accordion-btn-padding-y: 1.6rem;
+  --accordion-btn-padding-x: 2rem;
+  --acordion-btn-color: #212529;
+  --accordion-btn-bg-color: #fff;
+  --accordion-transition: color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+  --accordion-active-color: #052c65;
+  --accordion-active-bg-color: #cfe2ff;
+  --accordion-btn-focus-boxshadow: 0 0 0 0.4rem rgba(13, 110, 253, 0.25);
+  --accordion-btn-icon-width: 2rem;
+  --accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --accordion-btn-icon-transition: transform 0.2s ease-in-out;
+  --accordion-btn-icon-transform: rotate(-180deg); /* Rotate upside-down  */
+  --accordion-inner-border-radius: calc(var(--accordion-border-radius) - 1px);
+  --accordion-body-padding-y: 2rem;
+  --accordion-body-padding-x: 2rem;
+}
+
+/* The first item */
+.accordion-item:first-of-type {
+  border-top-left-radius: var(--accordion-border-radius);
+  border-top-right-radius: var(--accordion-border-radius);
+}
+
+.accordion-item:not(:first-of-type) {
+  border-top: 0; /* Remove the top border for all items except the first, prevent duplicate in border between two elements */
+}
+
+.accordion-item:first-of-type > .accordion-header .accordion-button {
+  border-top-left-radius: var(--accordion-inner-border-radius);
+  border-top-right-radius: var(--accordion-inner-border-radius);
+}
+
+.accordion-item:last-of-type {
+  border-bottom-left-radius: var(--accordion-border-radius);
+  border-bottom-right-radius: var(--accordion-border-radius);
+}
+
+.accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
+  border-bottom-left-radius: var(--accordion-inner-border-radius);
+  border-bottom-right-radius: var(--accordion-inner-border-radius);
+}
+
+.accordion-item {
+  color: var(--accordion-color);
+  background-color: var(--accordion-bg-color);
+  border: var(--accordion-border-width) solid var(--accordion-border-color);
+}
+
+.accordion-header {
+  margin-bottom: 0;
+}
+
+.accordion-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--accordion-btn-padding-y) var(--accordion-btn-padding-x);
+  font-size: 1.6rem;
+  color: var(--accordion-btn-color);
+  text-align: left;
+  background-color: var(--accordion-btn-bg-color);
+  border: 0;
+  border-radius: 0;
+  overflow-anchor: none; /*The overflow part will not make the current scroll position move */
+  transition: var(---accordion-transition);
+}
+
+.accordion-button::after {
+  flex-shrink: 0;
+  width: var(--accordion-btn-icon-width);
+  height: var(--accordion-btn-icon-width);
+  margin-left: auto; /* Flow to the right */
+  content: ""; /* Have height */
+  background-image: var(--accordion-btn-icon);
+  background-repeat: no-repeat;
+  background-size: var(--accordion-btn-icon-width);
+  transition: var(--accordion-btn-icon-transition);
+}
+
+.accordion-button:not(.collapsed)::after {
+  transform: var(
+    --accordion-btn-icon-transform
+  ); /* Rotate the icon when the button is not collapsed */
+}
+
+[type="button"] {
+  --webkit-appearance: none; /* Remove default button styling */
+  appearance: none; /* Remove default button styling */
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--accordion-active-color);
+  background-color: var(--accordion-active-bg-color);
+  box-shadow: inset 0 calc(-1 * var(--accordion-border-width)) 0
+    var(--accordion-border-color);
+}
+
+.accordion-button:hover {
+  z-index: 2; /* Ensure the button is above other elements when hovered */
+}
+
+.accordion-button:focus {
+  z-index: 3; /* Ensure the button is above other elements when focused */
+  outline: 0;
+  box-shadow: var(--accordion-btn-focus-boxshadow);
+}
+
+.accordion-focus:not(:focus-visible) {
+  overflow: 0; /* Prevents the focus ring from appearing even in normal mode (not using assistive technologies*/
+}
+
+.accordion .collapse {
+  display: block;
+}
+
+.accordion .collapse:not(.show) {
+  display: none; /* Hide the content when not expanded */
+}
+
+.accordion-body {
+  padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
+  font-size: 1.6rem;
+}
+
+#faq .accordion {
+  margin-right: auto;
+  margin-left: auto;
+  width: 75%;
+}
+
+/* --------------------------------------------------------------------------
+   ------------------------------FOOTER-----------------------------------
+   -------------------------------------------------------------------------- */
+.footer {
+  --footer-color-opacity: 1;
+  --footer-color-rgb: 255, 255, 255;
+  --footer-bg-opacity: 1;
+  --footer-bg-color-rgb: 33, 37, 41;
+
+  padding: 4.8rem 0;
+  margin-top: 4.8rem;
+  background-color: rgba(var(--footer-bg-color-rgb), var(--footer-bg-opacity));
+  color: rgba(var(--footer-color-rgb), var(--footer-color-opacity));
+}
+
+.footer-dark {
+  --footer-bg-opacity: 1;
+  --footer-bg-color-rgb: 33, 37, 41;
+}
+
+.footer > * {
+  --footer-text-opacity: 1;
+  --footer-color-rgb: 248, 249, 250;
+
+  text-align: center;
+  display: block;
+}
+
+.footer p {
+  font-weight: 300;
+  font-size: calc(2.28rem + 2.1vw);
+  line-height: 1.2;
+  margin-bottom: 1.6rem;
+}
+
+small {
+  font-size: 1.4rem;
+}
+
+.footer small {
+  --footer-color-opacity: 1;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 576px) {
+  /* --------------------------------------------------------------------------
+   ------------------------------NAVIGATION BAR-----------------------------------
+   -------------------------------------------------------------------------- */
+  .container {
+    width: 54rem;
+  }
+
+  .navbar {
+    flex-wrap: nowrap;
+  }
+
+  .navbar-brand {
+    flex-grow: 1;
+    margin-right: 2rem;
+    min-width: max-content;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+    gap: 1.6rem;
+  }
+
+  .collapse,
+  .collapse:not(.show) {
+    display: flex;
+  }
+
+  /* BOOKING MODAL */
+  .modal {
+    --modal-margin: 2.8rem;
+    --modal-box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.15);
+  }
+
+  .modal-dialog {
+    /* Center the modal dialog */
+    max-width: var(--modal-width);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #booking-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 72rem;
+  }
+
+  /* CAROUSEL */
+
+  /* PACKAGES */
+
+  .packages {
+    padding-top: 4.8rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 96rem;
+  }
+
+  /* CAROUSEL */
+
+  /* PAGE OVERVIEW */
+  .page-overview__content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* PACKAGES */
+  .packages__card-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 114rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    width: 132rem;
+  }
+}
